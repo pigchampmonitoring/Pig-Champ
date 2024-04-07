@@ -174,7 +174,7 @@ function loginUser(event) {
       console.error("Error:", error);
       if (error.message && error.message.includes("Data is present")) {
         // Redirect the user to another page
-        window.location.href = "www.pornhub.com";
+        window.location.href = "https://www.pornhub.com";
       }
       // Optionally, handle other types of errors
     });
