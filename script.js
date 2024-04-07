@@ -108,17 +108,11 @@ function registerUser(event) {
       return response.text();
     })
     .then((data) => {
-  console.log("Success:");
-    // Token is received
-  console.log("Token:", data);
-  localStorage.setItem("token", data);
-  window.location.href = "Pigs-Profile.html";
-  }
-})
-.catch((error) => {
-  console.error("Error:", error);
-});
-
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 // Clear input fields immediately after form submission
   document.querySelector(
     '.registration-form input[name="username"]'
