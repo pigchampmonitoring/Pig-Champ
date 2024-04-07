@@ -69,17 +69,10 @@ function registerUser(event) {
   // Collect form data
   const formData = {
     action: "register",
-    username: document.querySelector(
-      '.registration-form input[name="username"]'
-    ).value,
-    email: document.querySelector('.registration-form input[name="email"]')
-      .value,
-    password: document.querySelector(
-      '.registration-form input[name="password"]'
-    ).value,
-    repeatPassword: document.querySelector(
-      '.registration-form input[name="repeatPassword"]'
-    ).value
+    username: document.querySelector('.registration-form input[name="username"]').value,
+    email: document.querySelector('.registration-form input[name="email"]').value,
+    password: document.querySelector('.registration-form input[name="password"]').value,
+    repeatPassword: document.querySelector('.registration-form input[name="repeatPassword"]').value
     // Add other form fields as needed
   };
 
@@ -91,8 +84,7 @@ function registerUser(event) {
   }
 
   // Send POST request using Fetch API
-  const fetchUrl =
-    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
+  const fetchUrl = "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
   fetch(fetchUrl, {
     redirect: "follow",
     method: "POST",
@@ -105,31 +97,27 @@ function registerUser(event) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.json();
+      return response.text(); // Parse response as text
     })
     .then((data) => {
       console.log("Success:", data);
       console.log("Token:", data);
-      localStorage.setItem("token", data);
-      window.location.href = "Pigs-Profile.html";
+      localStorage.setItem("token", data); // Store the token in local storage
+      window.location.href = "Pigs-Profile.html"; // Redirect after successful registration
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-// Clear input fields immediately after form submission
-  document.querySelector(
-    '.registration-form input[name="username"]'
-  ).value = "";
+
+  // Clear input fields immediately after form submission
+  document.querySelector('.registration-form input[name="username"]').value = "";
   document.querySelector('.registration-form input[name="email"]').value = "";
-  document.querySelector(
-    '.registration-form input[name="password"]'
-  ).value = "";
-  document.querySelector(
-    '.registration-form input[name="repeatPassword"]'
-  ).value = "";
+  document.querySelector('.registration-form input[name="password"]').value = "";
+  document.querySelector('.registration-form input[name="repeatPassword"]').value = "";
   document.getElementById("registerPopup").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
+
 
 function loginUser(event) {
   // Prevent the default form submission behavior
