@@ -105,7 +105,7 @@ function registerUser(event) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.text();
+      return response.json();
     })
     .then((data) => {
       console.log("Success:", data);
