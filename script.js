@@ -109,24 +109,21 @@ function registerUser(event) {
     })
     .then((data) => {
       console.log("Success:", data);
-      document.querySelector(
-        '.registration-form input[name="username"]'
-      ).value = "";
-      document.querySelector('.registration-form input[name="email"]').value =
-        "";
-      document.querySelector(
-        '.registration-form input[name="password"]'
-      ).value = "";
-      document.querySelector(
-        '.registration-form input[name="repeatPassword"]'
-      ).value = "";
-      // Optionally, do something with the response
     })
     .catch((error) => {
       console.error("Error:", error);
-      // Optionally, handle errors
     });
-
+// Clear input fields immediately after form submission
+  document.querySelector(
+    '.registration-form input[name="username"]'
+  ).value = "";
+  document.querySelector('.registration-form input[name="email"]').value = "";
+  document.querySelector(
+    '.registration-form input[name="password"]'
+  ).value = "";
+  document.querySelector(
+    '.registration-form input[name="repeatPassword"]'
+  ).value = "";
   document.getElementById("registerPopup").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
@@ -156,14 +153,16 @@ function loginUser(event) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response.json();
+      return response.text(); // Parse response as text
     })
     .then((data) => {
-      console.log("Response from server:", data);
-      if (data === "Data is present") {
-        // Redirect the user to another page
-        window.location.href = "www.google.com";
-      } else {
+      console.log("Response from server:");
+      if (data !== "Data is not present") {
+        // Token is received
+        console.log("Token:", data);
+        localStorage.setItem("token", data);
+        window.location.href = "Pigs-Profile.html";
+      } else { 
         console.log("Data is not present");
         // Handle case when data is not present
       }
@@ -172,16 +171,12 @@ function loginUser(event) {
     })
     .catch((error) => {
       console.error("Error:", error);
-      if (error.message && error.message.includes("Data is present")) {
-        // Redirect the user to another page
-        window.location.href = "https://www.pornhub.com";
-      }
-      // Optionally, handle other types of errors
     });
 
   document.getElementById("loginPopup").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
+
 
 function toggleRepeatPasswordVisibility() {
   var repeatPasswordInput = document.getElementById("repeatPasswordInput");
