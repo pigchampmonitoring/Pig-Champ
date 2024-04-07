@@ -108,7 +108,10 @@ function registerUser(event) {
       return response.json();
     })
     .then((data) => {
-      console.log("Success:", data);
+      console.log("Success:");
+      console.log("Token:", data);
+        localStorage.setItem("token", data);
+        window.location.href = "Pigs-Profile.html";
     })
     .catch((error) => {
       console.error("Error:", error);
