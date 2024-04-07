@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+</head>
+<title>Pig CHAMP</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap">
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var menuToggle = document.querySelector('.menu-toggle');
+    var drawer = document.querySelector('.drawer');
+
+    function toggleDrawer() {
+      drawer.classList.toggle('active');
+    }
+
+    function closeDrawer(event) {
+      if (!drawer.contains(event.target) && !menuToggle.contains(event.target)) {
+        drawer.classList.remove('active');
+      }
+    }
+    menuToggle.addEventListener('click', toggleDrawer);
+    document.addEventListener('click', closeDrawer);
+  });
+</script>
+
+<body>
+  <header>
+    <div class="menu-toggle">
+      <div class="hamburger"></div>
+      <div class="hamburger"></div>
+      <div class="hamburger"></div>
+    </div>
+    <nav class="drawer">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Pigs Profile</a></li>
+        <li><a href="#">Notifications</a></li>
+      </ul>
+    </nav>
+    <div class="logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/015/450/898/original/pig-logo-design-vector.jpg" alt="My Piggy Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Pigs Profile</a></li>
+        <li><a href="#">Notifications</a></li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <a href="#" id="joinButton">Join</a>
+
+      <div id="registerPopup" class="popup">
+        <div class="popup-content">
+          <!-- Close button -->
+          <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close" onclick="closePopup()">
+          <!-- Registration Form -->
+          <h2>Registration Form</h2>
+          <!-- Modify the form onsubmit attribute to call a JavaScript function -->
+          <form class="registration-form" onsubmit="registerUser(event)">
+            <!-- Form fields -->
+            <input type="text" placeholder="Username" name="username">
+            <input type="email" placeholder="Email" name="email">
+            <div class="password-field">
+              <input id="passwordInput" type="password" placeholder="Password" name="password">
+              <img id="togglePassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon" onclick="togglePasswordVisibility()">
+            </div>
+            <div class="password-field">
+              <input id="repeatPasswordInput" type="password" placeholder="Repeat Password" name="repeatPassword">
+              <img id="toggleRepeatPassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Repeat Password" class="eye-icon" onclick="toggleRepeatPasswordVisibility()">
+            </div>
+            <div id="passwordMismatch" style="color: red; display: none;">Passwords do not match</div>
+            <!-- Submit button -->
+            <button type="submit">Register</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="blurBackground"></div>
+      <a href="#" id="loginButton">Login</a>
+
+      <div id="loginPopup" class="popup">
+        <div class="popup-content">
+          <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeLoginPopup()">
+          <h2>Login Form</h2>
+          <form class="login-form" onsubmit="loginUser(event)">
+            <!-- Form fields -->
+            <input type="email" placeholder="Email" name="email">
+            <div class="password-field">
+              <input id="loginPasswordInput" type="password" placeholder="Password" name="pass">
+              <img id="toggleLoginPassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon">
+            </div>
+            <!-- Submit button -->
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  <!-- Rest of your website content goes here -->
+  <br><br><br><br>
+  <div class="card add-card" id="addCard" onclick="showAddPigPopup()">
+    <div class="plus-icon">
+      <!-- Plus icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4z" />
+      </svg>
+    </div>
+    <div class="add-card-text">
+      <p>Add Card</p>
+    </div>
+  </div>
+
+  <!-- Add Pig Popup Form -->
+  <div id="addPigPopup" class="popup">
+    <div class="popup-content">
+      <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeaddpigpopup()">
+      <h2>Add Pig</h2>
+      <div class="add-pig-form">
+        <input type="file" id="pigImage" accept="image/*" onchange="previewImage(event)">
+        <input type="text" id="pigName" placeholder="Pig Name">
+        <input type="text" id="pigWeight" placeholder="Weight">
+        <input type="text" id="pigAge" placeholder="Age">
+        <select id="pigGender" onchange="toggleOffspringField()">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+
+        </select>
+        <div id="offspringField" style="display: none;">
+          <input type="number" id="offspringCount" placeholder="Offspring Count">
+        </div>
+        <input type="number" id="birthCount" placeholder="Number of Births" style="display: none;">
+        <br>
+        <button onclick="addPig()">Add Pig</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="pigs-content">
+
+  </section>
+</body>
+
+</html>
