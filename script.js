@@ -109,7 +109,9 @@ function registerUser(event) {
     })
     .then((data) => {
       console.log("Success:");
-      console.log("Token:", data);
+      if (data !== "Data is not present") {
+        // Token is received
+        console.log("Token:", data);
         localStorage.setItem("token", data);
         window.location.href = "Pigs-Profile.html";
     })
