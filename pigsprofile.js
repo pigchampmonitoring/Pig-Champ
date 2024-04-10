@@ -13,6 +13,10 @@ function closeaddpigpopup() {
   document.getElementById("blurBackground").classList.remove("blur");
 }
 
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = 'index.html';
+}
 // Function to validate the add pig form
 function validateAddPigForm() {
   // Add your form validation logic here
