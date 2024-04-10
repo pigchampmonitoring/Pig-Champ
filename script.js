@@ -148,7 +148,7 @@ function loginUser(event) {
     })
     .then((data) => {
       console.log("Response from server:");
-      if (data == "Token: Invalid email or password") {
+      if (data.includes("Invalid email or password")) {
         console.log("Data is not present");
         document.getElementById("invalidLogin").style.display = "block";
         // Handle case when data is not present
