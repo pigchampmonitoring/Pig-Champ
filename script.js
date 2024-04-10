@@ -148,24 +148,24 @@ function loginUser(event) {
     })
     .then((data) => {
       console.log("Response from server:");
-      if (data !== "Data is not present") {
+      if (data !== "Token: Invalid email or password") {
         // Token is received
         console.log("Token:", data);
         localStorage.setItem("token", data);
+        document.getElementById("loginPopup").style.display = "none";
+        document.getElementById("blurBackground").classList.remove("blur");
         window.location.href = "Pigs-Profile.html";
       } else { 
         console.log("Data is not present");
+        document.getElementById("invalidLogin").style.display = "block";
         // Handle case when data is not present
       }
-      document.querySelector('.login-form input[name="email"]').value = "";
-      document.querySelector('.login-form input[name="pass"]').value = "";
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 
-  document.getElementById("loginPopup").style.display = "none";
-  document.getElementById("blurBackground").classList.remove("blur");
+  
 }
 
 
