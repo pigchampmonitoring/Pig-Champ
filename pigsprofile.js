@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch(url, {
       redirect: 'follow',
       method: 'POST',
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(data)
+      }
     })
     .then(response => {
       if (!response.ok) {
