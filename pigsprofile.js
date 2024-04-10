@@ -113,12 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
       action: "verify",
       token: token
     };
-
-    // Make sure to replace 'YOUR_API_ENDPOINT' with the actual endpoint URL
-    var url = 'https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec';
     
     // Send the POST request
-    fetch(url, {
+    fetch("https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec", {
       redirect: 'follow',
       method: 'POST',
       body: JSON.stringify(data),
