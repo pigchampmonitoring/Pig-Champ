@@ -7,7 +7,8 @@ function showAddPigPopup() {
   document.getElementById("addPigPopup").style.display = "block";
   document.getElementById("blurBackground").classList.add("blur");
 }
-function closeAddPigPopup() {
+
+function closeaddpigpopup() {
   document.getElementById("addPigPopup").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
