@@ -115,13 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Send the POST request
-    fetch("https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec", {
+    fetch('https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec', {
       redirect: 'follow',
       method: 'POST',
-      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'text/plain;charset=utf-8'
-      }
+      },
+      body: JSON.stringify(data)
     })
     .then(response => {
       if (!response.ok) {
