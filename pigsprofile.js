@@ -101,3 +101,48 @@ function addPig() {
   document.getElementById("addPigPopup").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // This code will run when the page finishes loading
+  
+  // Function to send a POST request to the API script
+  function sendPostRequest() {
+    // Retrieve the token from local storage
+    var token = localStorage.getItem('token');
+
+    // Prepare the data to be sent in the request body
+    var data = {
+      action: "verify",
+      token: token
+    };
+
+    // Make sure to replace 'YOUR_API_ENDPOINT' with the actual endpoint URL
+    var url = 'https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec';
+    
+    // Send the POST request
+    fetch(url, {
+      redirect: 'follow',
+      method: 'POST',
+      headers: {
+        'Content-Type": "text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text();
+    })
+    .then(data => {
+      console.log(data); // Handle the response data
+    })
+    .catch(error => {
+      console.error('There was a problem with the POST request:', error);
+    });
+  }
+  
+  // Call the function to send the POST request
+  sendPostRequest();
+});
