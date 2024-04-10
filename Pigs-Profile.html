@@ -7,8 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
 </head>
 <title>Pig CHAMP</title>
-<script src="pigsprofile.js" defer></script>
-<link rel="stylesheet" href="pigsprofile.css">
+<link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap">
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -55,24 +54,7 @@
     </nav>
     <div class="auth-buttons">
       <div id="blurBackground"></div>
-      <a href="#" id="loginButton">Logout</a>
-
-      <div id="loginPopup" class="popup">
-        <div class="popup-content">
-          <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeLoginPopup()">
-          <h2>Login Form</h2>
-          <form class="login-form" onsubmit="loginUser(event)">
-            <!-- Form fields -->
-            <input type="email" placeholder="Email" name="email">
-            <div class="password-field">
-              <input id="loginPasswordInput" type="password" placeholder="Password" name="pass">
-              <img id="toggleLoginPassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon">
-            </div>
-            <!-- Submit button -->
-            <button type="submit">Login</button>
-          </form>
-        </div>
-      </div>
+      <a href="#" id="loginButton" onclick="logout()">Logout</a>
 
     </div>
   </header>
