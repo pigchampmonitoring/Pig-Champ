@@ -104,43 +104,47 @@ function addPig() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  // This code will run when the page finishes loading
-  
-  // Function to send a POST request to the API script
-  function sendPostRequest() {
-    // Retrieve the token from local storage
-    var token = localStorage.getItem('token');
+document.addEventListener("DOMContentLoaded", function () {
+  alert("This is an alert message!");
 
-    // Prepare the data to be sent in the request body
-    var data = {
+  // Retrieve the token from localStorage
+  const savedToken = localStorage.getItem("token");
+
+  // Check if the token exists and is not empty
+  if (savedToken && savedToken.trim() !== "") {
+    // Prepare the request data
+    const formData = {
       action: "verify",
-      token: token
+      token: savedToken
     };
-    
-    // Send the POST request
-    fetch('https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec', {
-      redirect: 'follow',
-      method: 'POST',
+
+    // Specify the API endpoint
+    const fetchUrl =
+      "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec";
+
+    // Make the POST request
+    fetch(fetchUrl, {
+      redirect: "follow",
+      method: "POST",
+      body: JSON.stringify(formData),
       headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+        "Content-Type": "text/plain;charset=utf-8"
       }
-      return response.text();
     })
-    .then(data => {
-      console.log(data); // Handle the response data
-    })
-    .catch(error => {
-      console.error('There was a problem with the POST request:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.text(); // Parse response as text
+      })
+      .then((data) => {
+        console.log("Response from server:", data);
+        // Handle the response data as needed
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } else {
+    console.log("No token found in localStorage.");
   }
-  
-  // Call the function to send the POST request
-  sendPostRequest();
 });
