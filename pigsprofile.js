@@ -325,3 +325,4 @@ if (pigImageInput.files.length > 0) {
     // Handle any errors here
     console.error('Error:', error);
 });
+}
