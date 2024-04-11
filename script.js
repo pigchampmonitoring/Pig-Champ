@@ -5,10 +5,28 @@ function toggleDrawer() {
 
 /* Join Button */
 // Function to open the popup and blur the background
-document.getElementById("joinButton").addEventListener("click", function () {
+function showRegister() {
+  closeaddpigpopup();
   document.getElementById("registerPopup").style.display = "block";
   document.getElementById("blurBackground").classList.add("blur");
-});
+}
+
+document
+  .querySelector("#joinButton, #joinBtn")
+  .addEventListener("click", showRegister);
+
+function showLogin() {
+  closeaddpigpopup();
+  closePopup();
+  document.getElementById("loginPopup").style.display = "block";
+  document.getElementById("blurBackground").classList.add("blur");
+}
+
+document
+  .querySelector("#loginButton, #loginbtn")
+  .addEventListener("click", function () {
+    showLogin();
+  });
 
 // JS for Popup
 function closePopup() {
@@ -44,11 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-document.getElementById("loginButton").addEventListener("click", function () {
-  document.getElementById("loginPopup").style.display = "block";
-  document.getElementById("blurBackground").classList.add("blur");
-});
-
 document.addEventListener("DOMContentLoaded", function () {
   const loginPasswordInput = document.getElementById("loginPasswordInput");
   const toggleLoginPassword = document.getElementById("toggleLoginPassword");
@@ -65,17 +78,32 @@ document.addEventListener("DOMContentLoaded", function () {
 function registerUser(event) {
   // Prevent the default form submission behavior
   event.preventDefault();
+  document.getElementById("emailTaken").style.display = "none";
+  document.getElementById("usernameTaken").style.display = "none";
 
   // Collect form data
   const formData = {
     action: "register",
-    username: document.querySelector('.registration-form input[name="username"]').value,
-    email: document.querySelector('.registration-form input[name="email"]').value,
-    password: document.querySelector('.registration-form input[name="password"]').value,
-    repeatPassword: document.querySelector('.registration-form input[name="repeatPassword"]').value
+    username: document.querySelector(
+      '.registration-form input[name="username"]'
+    ).value,
+    email: document.querySelector('.registration-form input[name="email"]')
+      .value,
+    password: document.querySelector(
+      '.registration-form input[name="password"]'
+    ).value,
+    repeatPassword: document.querySelector(
+      '.registration-form input[name="repeatPassword"]'
+    ).value
     // Add other form fields as needed
   };
 
+  // Validate password
+  if (!validatePassword(formData.password)) {
+    return;
+  }
+
+  // Check if passwords match
   if (formData.password !== formData.repeatPassword) {
     document.getElementById("passwordMismatch").style.display = "block"; // Show the password mismatch message
     return; // Exit function early if passwords don't match
@@ -84,7 +112,8 @@ function registerUser(event) {
   }
 
   // Send POST request using Fetch API
-  const fetchUrl = "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
+  const fetchUrl =
+    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
   fetch(fetchUrl, {
     redirect: "follow",
     method: "POST",
@@ -100,24 +129,24 @@ function registerUser(event) {
       return response.text(); // Parse response as text
     })
     .then((data) => {
-      console.log("Success:", data);
-      console.log("Token:", data);
-      localStorage.setItem("token", data); // Store the token in local storage
-      window.location.href = "Pigs-Profile.html"; // Redirect after successful registration
+      if (data.includes("errorEmailAndUsername")) {
+        document.getElementById("usernameTaken").style.display = "block";
+        document.getElementById("emailTaken").style.display = "block";
+      } else if (data.includes("Username")) {
+        document.getElementById("usernameTaken").style.display = "block";
+      } else if (data.includes("Email")) {
+        document.getElementById("emailTaken").style.display = "block";
+      } else if (data.includes("Success")) {
+        console.log("Success:");
+        console.log("Token:", data);
+        localStorage.setItem("token", data); // Store the token in local storage
+        window.location.href = "Pigs-Profile.html"; // Redirect after successful registration
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
-  // Clear input fields immediately after form submission
-  document.querySelector('.registration-form input[name="username"]').value = "";
-  document.querySelector('.registration-form input[name="email"]').value = "";
-  document.querySelector('.registration-form input[name="password"]').value = "";
-  document.querySelector('.registration-form input[name="repeatPassword"]').value = "";
-  document.getElementById("registerPopup").style.display = "none";
-  document.getElementById("blurBackground").classList.remove("blur");
 }
-
 
 function loginUser(event) {
   // Prevent the default form submission behavior
@@ -164,10 +193,7 @@ function loginUser(event) {
     .catch((error) => {
       console.error("Error:", error);
     });
-
-  
 }
-
 
 function toggleRepeatPasswordVisibility() {
   var repeatPasswordInput = document.getElementById("repeatPasswordInput");
@@ -184,88 +210,59 @@ function toggleRepeatPasswordVisibility() {
   }
 }
 
-// Function to validate the add pig form
-function validateAddPigForm() {
-  // Add your form validation logic here
-  // For example, check if all required fields are filled
-  return true; // Return true if the form is valid and should be submitted, false otherwise
-}
+function validatePassword(password) {
+  // Regular expressions for password validation
+  const uppercaseRegex = /[A-Z]/;
+  const lowercaseRegex = /[a-z]/;
+  const numberRegex = /[0-9]/;
+  const letterRegex = /[A-Za-z]/;
+  const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
-// Function to toggle the display of the Offspring and Birth Count fields based on the selected gender
-function toggleOffspringField() {
-  var gender = document.getElementById("pigGender").value;
-  var offspringField = document.getElementById("offspringField");
-  var birthCountField = document.getElementById("birthCount");
-  if (gender === "female") {
-    offspringField.style.display = "block";
-    birthCountField.style.display = "block";
+  let errorMessage = ""; // Initialize an empty error message
+
+  // Check for minimum length
+  if (password.length < 7) {
+    errorMessage += "Password must be at least 7 characters long. ";
+  }
+
+  // Check for presence of at least one uppercase letter
+  if (!uppercaseRegex.test(password)) {
+    errorMessage += "Include at least one uppercase letter. ";
+  }
+
+  // Check for presence of at least one lowercase letter
+  if (!lowercaseRegex.test(password)) {
+    errorMessage += "Include at least one lowercase letter. ";
+  }
+
+  // Check for presence of at least one number
+  if (!numberRegex.test(password)) {
+    errorMessage += "Include at least one number. ";
+  }
+
+  // Check for presence of at least one letter
+  if (!letterRegex.test(password)) {
+    errorMessage += "Include at least one letter. ";
+  }
+
+  // Check for absence of special characters
+  if (specialCharRegex.test(password)) {
+    errorMessage += "Special characters are not allowed. ";
+  }
+
+  // If no errors were found, return true
+  if (errorMessage === "") {
+    return true;
   } else {
-    offspringField.style.display = "none";
-    birthCountField.style.display = "none";
-  }
-}
-
-function addPig() {
-  // Retrieve input values
-  var pigName = document.getElementById("pigName").value;
-  var pigWeight = document.getElementById("pigWeight").value;
-  var pigAge = document.getElementById("pigAge").value;
-  var pigGender = document.getElementById("pigGender").value;
-  var offspringCount = document.getElementById("offspringCount").value;
-
-  // Create a new card div
-  var card = document.createElement("div");
-  card.classList.add("card");
-
-  // Create left side of the card
-  var left = document.createElement("div");
-  left.classList.add("left");
-  var imageContainer = document.createElement("div");
-  imageContainer.classList.add("image-container");
-  var pigImage = document.createElement("img");
-  pigImage.src = "path_to_default_image"; // Set default image path here
-  pigImage.alt = "Pig Image";
-  imageContainer.appendChild(pigImage);
-  left.appendChild(imageContainer);
-
-  // Create right side of the card
-  var right = document.createElement("div");
-  right.classList.add("right");
-  var pigHeader = document.createElement("h2");
-  pigHeader.textContent = pigName;
-  var pigWeightParagraph = document.createElement("p");
-  pigWeightParagraph.textContent = "Weight: " + pigWeight + " kg";
-  var pigAgeOffspringParagraph = document.createElement("p");
-  pigAgeOffspringParagraph.classList.add("age-offspring");
-  pigAgeOffspringParagraph.textContent = "Age: " + pigAge + " years";
-  if (pigGender === "female") {
-    pigAgeOffspringParagraph.textContent += ", Offspring: " + offspringCount;
-  }
-  var moreInfoButton = document.createElement("button");
-  moreInfoButton.textContent = "More Info";
-  right.appendChild(pigHeader);
-  right.appendChild(pigWeightParagraph);
-  right.appendChild(pigAgeOffspringParagraph);
-  if (pigGender === "female") {
-    right.appendChild(moreInfoButton);
+    // If errors were found, show an alert with the error message
+    alert(errorMessage);
+    return false;
   }
 
-  // Append left and right sides to the card
-  card.appendChild(left);
-  card.appendChild(right);
+  // Check for absence of special characters
+  if (specialCharRegex.test(password)) {
+    return false;
+  }
 
-  // Append the new card to the pigs content section
-  var pigsContent = document.querySelector(".pigs-content");
-  pigsContent.appendChild(card);
-
-  // Clear form fields
-  document.getElementById("pigName").value = "";
-  document.getElementById("pigWeight").value = "";
-  document.getElementById("pigAge").value = "";
-  document.getElementById("pigGender").value = "male";
-  document.getElementById("offspringCount").value = "";
-
-  // Close the form
-  document.getElementById("addPigPopup").style.display = "none";
-  document.getElementById("blurBackground").classList.remove("blur");
+  return true;
 }
