@@ -66,7 +66,10 @@
           <form class="registration-form" onsubmit="registerUser(event)">
             <!-- Form fields -->
             <input type="text" placeholder="Username" name="username">
+            <div id="usernameTaken" style="color: red; display: none;">Username already taken.</div>
             <input type="email" placeholder="Email" name="email">
+            <div id="emailTaken" style="color: red; display: none; text-align: center;">Email is already registered, you can <button onclick="showLogin()">Login</button></div>
+
             <div class="password-field">
               <input id="passwordInput" type="password" placeholder="Password" name="password">
               <img id="togglePassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon" onclick="togglePasswordVisibility()">
@@ -124,28 +127,15 @@
   <div id="addPigPopup" class="popup">
     <div class="popup-content">
       <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeaddpigpopup()">
-      <h2>Add Pig</h2>
-      <div class="add-pig-form">
-        <input type="file" id="pigImage" accept="image/*" onchange="previewImage(event)">
-        <input type="text" id="pigName" placeholder="Pig Name">
-        <input type="text" id="pigWeight" placeholder="Weight">
-        <input type="text" id="pigAge" placeholder="Age">
-        <select id="pigGender" onchange="toggleOffspringField()">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+      <h2 style="text-align: center;">You need an account<br>to add pigs.</h2>
 
-        </select>
-        <div id="offspringField" style="display: none;">
-          <input type="number" id="offspringCount" placeholder="Offspring Count">
-        </div>
-        <input type="number" id="birthCount" placeholder="Number of Births" style="display: none;">
-        <br>
-        <button onclick="addPig()">Add Pig</button>
+      <div class="add-pig-form">
+        <button onclick="showLogin()">Login</button>
+        <span>OR</span>
+        <button onclick="showRegister()">Register</button>
       </div>
     </div>
   </div>
-
-  <section class="pigs-content">
 
   </section>
 </body>
