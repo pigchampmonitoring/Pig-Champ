@@ -303,6 +303,7 @@ function getOTP() {
       if (data.includes("OTP sent successfully")) {
         document.getElementById("otpbtn").style.display = "none";
         document.getElementById("otp").style.display = "block";
+        document.getElementById("otpready").style.display = "block";
         document.getElementById("sendOtpbtn").style.display = "block";
       } else if (data.includes("ggboss")) {
         document.getElementById("emailTaken").style.display = "block";
@@ -320,6 +321,7 @@ function getOTP() {
 
 
 function sendOTP() {
+  
   const formData = {
     action: "verifyotp",
     otp: document.getElementById("otp").value,
@@ -350,8 +352,11 @@ function sendOTP() {
     .then((data) => {
       console.log(data);
       if (data.includes("Verified")) {
+        document.querySelector('.registration-form input[name="username"]').disabled = true;
+  document.querySelector('.registration-form input[name="email"]').disabled = true;
         document.getElementById("otp").style.display = "none";
         document.getElementById("sendOtpbtn").style.display = "none";
+        document.getElementById("otpready").style.display = "none";
 
         document.getElementById("passwordInput").style.display = "block";
         document.getElementById("reg").style.display = "block";
