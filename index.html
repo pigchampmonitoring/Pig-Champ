@@ -10,47 +10,29 @@
 <script src="script.js" defer></script>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@700&display=swap">
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var menuToggle = document.querySelector('.menu-toggle');
-    var drawer = document.querySelector('.drawer');
-
-    function toggleDrawer() {
-      drawer.classList.toggle('active');
-    }
-
-    function closeDrawer(event) {
-      if (!drawer.contains(event.target) && !menuToggle.contains(event.target)) {
-        drawer.classList.remove('active');
-      }
-    }
-    menuToggle.addEventListener('click', toggleDrawer);
-    document.addEventListener('click', closeDrawer);
-  });
-</script>
-
 <body>
   <header>
-    <div class="menu-toggle">
+    <div class="menu-toggle" onclick=openMenu();>
       <div class="hamburger"></div>
       <div class="hamburger"></div>
       <div class="hamburger"></div>
     </div>
-    <nav class="drawer">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Pigs Profile</a></li>
-        <li><a href="#">Notifications</a></li>
-      </ul>
-    </nav>
+    <nav class="drawer" id="menuburger" style="display: none">
+  <ul class="my-navigation">
+    <li><a href="home.html">Home</a></li><br>
+    <li class="active"><a href="index.html">Pigs Profile</a></li><br>
+    <li><a href="notifications.html">Notifications</a></li><br><br>
+  </ul>
+</nav> 
+
     <div class="logo">
       <img src="https://static.vecteezy.com/system/resources/previews/015/450/898/original/pig-logo-design-vector.jpg" alt="My Piggy Logo">
     </div>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li class="active"><a href="#">Pigs Profile</a></li>
-        <li><a href="#">Notifications</a></li>
+        <li><a href="home.html">Home</a></li>
+        <li class="active"><a href="index.html">Pigs Profile</a></li>
+        <li><a href="notifications.html">Notifications</a></li>
       </ul>
     </nav>
     <div class="auth-buttons">
