@@ -138,7 +138,7 @@ function registerUser(event) {
 
   // Send POST request using Fetch API
   const fetchUrl =
-    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
+    "https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec"; // Replace with your API endpoint
   fetch(fetchUrl, {
     redirect: "follow",
     method: "POST",
@@ -185,7 +185,7 @@ function loginUser(event) {
   };
   // Send POST request using Fetch API
   const fetchUrl =
-    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec"; // Replace with your API endpoint
+    "https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec"; // Replace with your API endpoint
   fetch(fetchUrl, {
     redirect: "follow",
     method: "POST",
@@ -247,7 +247,7 @@ function getOTP() {
   };
 
   const fetchUrl =
-    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec";
+    "https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec";
 
   fetch(fetchUrl, {
     redirect: "follow",
@@ -295,7 +295,7 @@ function sendOTP() {
   };
 
   const fetchUrl =
-    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec";
+    "https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec";
 
   fetch(fetchUrl, {
     redirect: "follow",
