@@ -71,25 +71,23 @@ nav ul li a {
 
 .drawer {
   position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100%;
+  top: 70px; /* Change from top to bottom */
+  left: 0;
+  width: 100%;
   background-color: #333;
   color: #fff;
-  transition: left 0.3s ease;
+  transition: top 0.4s ease; /* Change from left to bottom */
 }
+
 
 .drawer ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .drawer ul li {
   display: none;
 }
-
 nav ul li.active a {
   color: #007bff;
 }
@@ -101,6 +99,7 @@ nav ul li.active a {
 .drawer.active ul li {
   display: block;
 }
+
 
 .hamburger {
   width: 25px;
@@ -150,6 +149,7 @@ nav ul li.active a {
   }
 }
 
+
 /* Media query for small screens */
 @media screen and (max-width: 768px) {
   .menu-toggle {
@@ -159,8 +159,25 @@ nav ul li.active a {
   nav ul {
     display: none;
   }
+  
+.my-navigation {
+  display: block;
+  align-items: center; /* Align items vertically */
+}
 
-  .menu-toggle.active + nav ul {
+  .my-navigation {
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+  .logo {
+    margin: 0 auto; /* Center the logo horizontally */
+    display: block; /* Ensure the logo occupies its own line */
+  }
+
+ .menu-toggle.active + nav ul {
     display: flex;
     flex-direction: column;
     position: absolute;
