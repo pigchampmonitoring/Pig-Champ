@@ -67,20 +67,27 @@
             <!-- Form fields -->
             <input type="text" placeholder="Username" name="username">
             <div id="usernameTaken" style="color: red; display: none;">Username already taken.</div>
-            <input type="email" placeholder="Email" name="email">
+            <div id="noUsername" style="color: red; display: none;">Please fill this field.</div>
+            <input type="email" placeholder="Email" name="email" id="emailInput">
+            <input type="text" id="otp" placeholder="Enter OTP" style="display: none">
+            <div id="nvalidOTP" style="color: red; display: none;">Invalid OTP</div>
+            <button type="submit" id="otpbtn" style="display: none" onclick="getOTP()">Get OTP</button>
+            <button type="submit" id="sendOtpbtn" style="display: none" onclick="sendOTP()">Send OTP</button>
+
             <div id="emailTaken" style="color: red; display: none; text-align: center;">Email is already registered, you can <button onclick="showLogin()">Login</button></div>
+            <div id="noEmail" style="color: red; display: none;">Please fill this field.</div>
 
             <div class="password-field">
-              <input id="passwordInput" type="password" placeholder="Password" name="password">
-              <img id="togglePassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon" onclick="togglePasswordVisibility()">
+              <input id="passwordInput" type="password" placeholder="Password" name="password" style="display: none">
+              <img id="togglePassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Password" class="eye-icon" onclick="togglePasswordVisibility()" style="display: none">
             </div>
             <div class="password-field">
-              <input id="repeatPasswordInput" type="password" placeholder="Repeat Password" name="repeatPassword">
-              <img id="toggleRepeatPassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Repeat Password" class="eye-icon" onclick="toggleRepeatPasswordVisibility()">
+              <input id="repeatPasswordInput" type="password" placeholder="Repeat Password" name="repeatPassword" style="display: none">
+              <img id="toggleRepeatPassword" src="https://github.com/nthnlgmz/imgs/assets/143614589/71ac831f-0fb7-414a-a0ad-2be00d8d7698" alt="Toggle Repeat Password" class="eye-icon" onclick="toggleRepeatPasswordVisibility()" style="display: none">
             </div>
             <div id="passwordMismatch" style="color: red; display: none;">Passwords do not match</div>
             <!-- Submit button -->
-            <button type="submit">Register</button>
+            <button type="submit" id="reg" style="display: none">Register</button>
           </form>
         </div>
       </div>
