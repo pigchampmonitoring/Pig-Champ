@@ -1,7 +1,28 @@
-function toggleDrawer() {
-  var drawer = document.querySelector(".drawer");
-  drawer.classList.toggle("active");
+document.addEventListener('DOMContentLoaded', function() {
+  var menuToggle = document.querySelector('.menu-toggle');
+  var drawer = document.querySelector('.drawer');
+
+  function toggleDrawer() {
+    drawer.classList.toggle('active');
+  }
+
+function closeDrawer(event) {
+  // Check if the clicked element or any of its parents is the drawer, menu toggle, or part of the drawer
+  var isClickedInsideDrawer = drawer.contains(event.target) || menuToggle.contains(event.target) || event.target.closest('.drawer');
 }
+
+
+  menuToggle.addEventListener('click', toggleDrawer);
+  document.addEventListener('click', closeDrawer);
+});
+
+function openMenu() {
+  var drawers = document.getElementById('menuburger');
+  drawers.style.display = drawers.style.display === 'none' ? 'block' : 'none'; 
+  }
+
+
+
 
 /* Join Button */
 // Function to open the popup and blur the background
@@ -234,17 +255,31 @@ document
   });
 
 function getOTP() {
+  // Clear any previous error messages
   document.getElementById("emailTaken").style.display = "none";
   document.getElementById("usernameTaken").style.display = "none";
+  document.getElementById("noUsername").style.display = "none";
+  document.getElementById("noEmail").style.display = "none";
 
+  // Collect form data
+  const usernameInput = document.querySelector('.registration-form input[name="username"]');
+  const emailInput = document.querySelector('.registration-form input[name="email"]');
+  
   const formData = {
     action: "getotp",
-    username: document.querySelector(
-      '.registration-form input[name="username"]'
-    ).value,
-    email: document.querySelector('.registration-form input[name="email"]')
-      .value
+    username: usernameInput.value,
+    email: emailInput.value
   };
+
+  // Check if username and email fields are empty
+  if (!formData.username) {
+    document.getElementById("noUsername").style.display = "block";
+    return; // Exit function if username is empty
+  }
+  if (!formData.email) {
+    document.getElementById("noEmail").style.display = "block";
+    return; // Exit function if email is empty
+  }
 
   const fetchUrl =
     "https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec";
@@ -257,13 +292,13 @@ function getOTP() {
       "Content-Type": "text/plain;charset=utf-8"
     }
   })
-    .then((response) => {
+    .then(response => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       return response.text(); // Parse response as text
     })
-    .then((data) => {
+    .then(data => {
       console.log(data);
       if (data.includes("OTP sent successfully")) {
         document.getElementById("otpbtn").style.display = "none";
@@ -278,10 +313,11 @@ function getOTP() {
         document.getElementById("usernameTaken").style.display = "block";
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.error("Error:", error);
     });
 }
+
 
 function sendOTP() {
   const formData = {
