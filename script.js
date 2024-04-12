@@ -31,6 +31,8 @@ document
 // JS for Popup
 function closePopup() {
   document.getElementById("registerPopup").style.display = "none";
+  document.getElementById("noEmail").style.display = "none";
+  document.getElementById("noUsername").style.display = "none";
   document.getElementById("blurBackground").classList.remove("blur");
 }
 function closeLoginPopup() {
@@ -80,6 +82,8 @@ function registerUser(event) {
   event.preventDefault();
   document.getElementById("emailTaken").style.display = "none";
   document.getElementById("usernameTaken").style.display = "none";
+  document.getElementById("noEmail").style.display = "none";
+  document.getElementById("noUsername").style.display = "none";
 
   // Collect form data
   const formData = {
@@ -97,6 +101,27 @@ function registerUser(event) {
     ).value
     // Add other form fields as needed
   };
+
+  // Check if any field is empty
+  // Check if any field is empty
+  if (
+    !formData.username ||
+    !formData.email ||
+    !formData.password ||
+    !formData.repeatPassword
+  ) {
+    if (!formData.username) {
+      document.getElementById("noUsername").style.display = "block";
+    } else {
+      document.getElementById("noUsername").style.display = "none";
+    }
+    if (!formData.email) {
+      document.getElementById("noEmail").style.display = "block";
+    } else {
+      document.getElementById("noEmail").style.display = "none";
+    }
+    return;
+  }
 
   // Validate password
   if (!validatePassword(formData.password)) {
@@ -188,6 +213,118 @@ function loginUser(event) {
         document.getElementById("loginPopup").style.display = "none";
         document.getElementById("blurBackground").classList.remove("blur");
         window.location.href = "Pigs-Profile.html";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+document
+  .getElementById("emailInput")
+  .addEventListener("input", function (event) {
+    const emailInput = event.target.value.trim();
+    const otpButton = document.getElementById("otpbtn");
+
+    if (emailInput.includes("@") && emailInput.includes(".com")) {
+      otpButton.style.display = "block";
+    } else {
+      otpButton.style.display = "none";
+    }
+  });
+
+function getOTP() {
+  document.getElementById("emailTaken").style.display = "none";
+  document.getElementById("usernameTaken").style.display = "none";
+
+  const formData = {
+    action: "getotp",
+    username: document.querySelector(
+      '.registration-form input[name="username"]'
+    ).value,
+    email: document.querySelector('.registration-form input[name="email"]')
+      .value
+  };
+
+  const fetchUrl =
+    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec";
+
+  fetch(fetchUrl, {
+    redirect: "follow",
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    }
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.text(); // Parse response as text
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.includes("OTP sent successfully")) {
+        document.getElementById("otpbtn").style.display = "none";
+        document.getElementById("otp").style.display = "block";
+        document.getElementById("sendOtpbtn").style.display = "block";
+      } else if (data.includes("ggboss")) {
+        document.getElementById("emailTaken").style.display = "block";
+        document.getElementById("usernameTaken").style.display = "block";
+      } else if (data.includes("Email")) {
+        document.getElementById("emailTaken").style.display = "block";
+      } else if (data.includes("Username")) {
+        document.getElementById("usernameTaken").style.display = "block";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function sendOTP() {
+  const formData = {
+    action: "verifyotp",
+    otp: document.getElementById("otp").value,
+    username: document.querySelector(
+      '.registration-form input[name="username"]'
+    ).value,
+    email: document.querySelector('.registration-form input[name="email"]')
+      .value
+  };
+
+  const fetchUrl =
+    "https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec";
+
+  fetch(fetchUrl, {
+    redirect: "follow",
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    }
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.text(); // Parse response as text
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.includes("Verified")) {
+        document.getElementById("otp").style.display = "none";
+        document.getElementById("sendOtpbtn").style.display = "none";
+
+        document.getElementById("passwordInput").style.display = "block";
+        document.getElementById("reg").style.display = "block";
+        document.getElementById("togglePassword").style.display = "block";
+        document.getElementById("repeatPasswordInput").style.display = "block";
+        document.getElementById("toggleRepeatPassword").style.display = "block";
+        document.getElementById("nvalidOTP").style.display = "none";
+      } else {
+        document.getElementById("nvalidOTP").style.display = "block";
       }
     })
     .catch((error) => {
