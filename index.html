@@ -53,6 +53,12 @@
             <input type="email" placeholder="Email" name="email" id="emailInput">
             <input type="text" id="otp" placeholder="Enter OTP" style="display: none">
             <div id="nvalidOTP" style="color: red; display: none;">Invalid OTP</div>
+<div id="otpready" style="color: green; display: none; justify-content: center;">
+  <p style="text-align: center;">OTP sent, please check<br>your inbox or <span style="color: red;">spam</span> folder.</p>
+</div>
+
+
+
             <button type="submit" id="otpbtn" style="display: none" onclick="getOTP()">Get OTP</button>
             <button type="submit" id="sendOtpbtn" style="display: none" onclick="sendOTP()">Send OTP</button>
 
