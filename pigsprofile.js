@@ -32,7 +32,7 @@ function closeaddpigpopup() {
 }
 
 function logout() {
-  token = "";
+  localStorage.setItem('token', '');
   window.location.href = 'index.html';
 }
 // Function to validate the add pig form
