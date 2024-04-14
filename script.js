@@ -11,7 +11,7 @@ function closeDrawer(event) {
   var isClickedInsideDrawer = drawer.contains(event.target) || menuToggle.contains(event.target) || event.target.closest('.drawer');
 }
 
-
+ 
   menuToggle.addEventListener('click', toggleDrawer);
   document.addEventListener('click', closeDrawer);
 });
