@@ -135,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = "index.html";
       } else {
         var jsonData = JSON.parse(data);
+        var pigsContainer = document.querySelector(".pigs-content"); // Define the pigsContainer
+
         jsonData.forEach(function(pig) {
           var pigCard = document.createElement("div");
           pigCard.className = "card";
@@ -167,6 +169,13 @@ document.addEventListener('DOMContentLoaded', function() {
           detailsContainer.appendChild(pigAgeGender);
           detailsContainer.appendChild(pigOffspringBirths);
 
+          // Add "More Info" button only for female pigs
+          if (pig["Gender"] === "female") {
+            var moreInfoButton = document.createElement("button");
+            moreInfoButton.textContent = "More Info";
+            detailsContainer.appendChild(moreInfoButton);
+          }
+
           pigCard.appendChild(imageContainer);
           pigCard.appendChild(detailsContainer);
 
@@ -177,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => {
       console.error('There was a problem with the POST request:', error);
     });
-  }
+}
 
-  sendPostRequest();
-});
+sendPostRequest();
+
