@@ -1,3 +1,5 @@
+var pigsContainer;
+
 document.addEventListener('DOMContentLoaded', function() {
   var menuToggle = document.querySelector('.menu-toggle');
   var drawer = document.querySelector('.drawer');
