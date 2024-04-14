@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.text();
     })
     .then(data => {
-      console.log(data);
      if (data.includes("NMSFFU")) {
        alert("You don't belong here, why don't you just login or register.");
   window.location.href = "index.html";
