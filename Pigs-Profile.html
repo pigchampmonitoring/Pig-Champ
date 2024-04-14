@@ -60,10 +60,12 @@
       <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeaddpigpopup()">
       <h2>Add Pig</h2>
       <div class="add-pig-form">
-        <input type="file" id="pigImage" accept="image/*" onchange="previewImage(event)">
-        <input type="text" id="pigName" placeholder="Pig Name">
+        <input type="file" id="pigImageInput" accept="image/*" onchange="previewImage(event)">
+
+        <input type="text" id="pigName" placeholder="Pig Tag">
         <input type="text" id="pigWeight" placeholder="Weight">
-        <input type="text" id="pigAge" placeholder="Age">
+        <input type="date" id="pigBirthdate" placeholder="Birthdate">
+
         <select id="pigGender" onchange="toggleOffspringField()">
           <option value="male">Male</option>
           <option value="female">Female</option>
