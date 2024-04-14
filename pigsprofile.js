@@ -170,3 +170,45 @@ document.addEventListener('DOMContentLoaded', function() {
   // Call the function to send the POST request
   sendPostRequest();
 });
+
+// Get the container where the pig details will be displayed
+var pigsContainer = document.querySelector(".pigs-content");
+
+// Iterate through each pig's details and create HTML elements to display them
+jsonData.forEach(function(pig) {
+    var pigCard = document.createElement("div");
+    pigCard.className = "card";
+
+    var imageContainer = document.createElement("div");
+    imageContainer.className = "left";
+
+    var pigImage = document.createElement("img");
+    pigImage.src = pig["Image Link"];
+    pigImage.alt = pig["Pig Name"];
+    imageContainer.appendChild(pigImage);
+
+    var detailsContainer = document.createElement("div");
+    detailsContainer.className = "right";
+
+    var pigName = document.createElement("h2");
+    pigName.textContent = pig["Pig Name"];
+
+    var pigWeight = document.createElement("p");
+    pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
+
+    var pigAgeGender = document.createElement("p");
+    pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
+
+    var pigOffspringBirths = document.createElement("p");
+    pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
+
+    detailsContainer.appendChild(pigName);
+    detailsContainer.appendChild(pigWeight);
+    detailsContainer.appendChild(pigAgeGender);
+    detailsContainer.appendChild(pigOffspringBirths);
+
+    pigCard.appendChild(imageContainer);
+    pigCard.appendChild(detailsContainer);
+
+    pigsContainer.appendChild(pigCard);
+});
