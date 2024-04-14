@@ -1,7 +1,4 @@
-var pigsContainer;
-
-document.addEventListener('DOMContentLoaded', function() {
-  var menuToggle = document.querySelector('.menu-toggle');
+ var menuToggle = document.querySelector('.menu-toggle');
   var drawer = document.querySelector('.drawer');
   var pigsContainer = document.querySelector(".pigs-content");  // Moved here
 
@@ -108,13 +105,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("blurBackground").classList.remove("blur");
   }
 
- function sendPostRequest() {
-    var token = localStorage.getItem('token');
-    var data = {
-        action: "verify",
-        token: token
-    };
 
+document.addEventListener('DOMContentLoaded', function() {
+  // This code will run when the page finishes loading
+  
+  // Function to send a POST request to the API script
+  function sendPostRequest() {
+    // Retrieve the token from local storage
+    var token = localStorage.getItem('token');
+
+    // Prepare the data to be sent in the request body
+    var data = {
+      action: "verify",
+      token: token
+    };
     fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
             redirect: 'follow',
             method: 'POST',
@@ -187,3 +191,4 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 sendPostRequest();
+})
