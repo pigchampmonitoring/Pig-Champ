@@ -49,61 +49,134 @@
     }
   }
 
-  function addPig() {
+function calculateAge(birthdate) {
+    var today = new Date();
+    var years = today.getFullYear() - birthdate.getFullYear();
+    var months = today.getMonth() - birthdate.getMonth();
+    var days = today.getDate() - birthdate.getDate();
+
+    if (months < 0 || (months === 0 && today.getDate() < birthdate.getDate())) {
+        years--;
+        months += 12;
+    }
+
+    if (days < 0) {
+        months--;
+        var tempDate = new Date(birthdate.getFullYear(), birthdate.getMonth() + 1, 0);
+        days += tempDate.getDate();
+    }
+
+    return {
+        years: years,
+        months: months,
+        days: days
+    };
+}
+
+function formatAge(age) {
+    if (age.years > 0) {
+        return age.years + (age.years === 1 ? " year" : " years") + " old";
+    } else if (age.months > 0) {
+        return age.months + (age.months === 1 ? " month" : " months") + " old";
+    } else {
+        return age.days + (age.days === 1 ? " day" : " days") + " old";
+    }
+}
+
+function addPig() {
     var pigName = document.getElementById("pigName").value;
     var pigWeight = document.getElementById("pigWeight").value;
-    var pigAge = document.getElementById("pigAge").value;
+    var pigBirthdate = new Date(document.getElementById("pigBirthdate").value);
     var pigGender = document.getElementById("pigGender").value;
     var offspringCount = document.getElementById("offspringCount").value;
 
-    var card = document.createElement("div");
-    card.classList.add("card");
+    var pigAge = calculateAge(pigBirthdate);
+    var formattedAge = formatAge(pigAge);
 
-    var left = document.createElement("div");
-    left.classList.add("left");
-    var imageContainer = document.createElement("div");
-    imageContainer.classList.add("image-container");
-    var pigImage = document.createElement("img");
-    pigImage.src = "path_to_default_image"; 
-    pigImage.alt = "Pig Image";
-    imageContainer.appendChild(pigImage);
-    left.appendChild(imageContainer);
+    // Get the image data
+    var pigImageInput = document.getElementById("pigImageInput");
+    var pigImageFile = pigImageInput.files[0];
+    var defaultImageURL = "https://github.com/pigchampmonitoring/Pig-Champ/assets/166279981/99f91bd4-6981-4ba6-9d10-1075b540b446";
 
-    var right = document.createElement("div");
-    right.classList.add("right");
-    var pigHeader = document.createElement("h2");
-    pigHeader.textContent = pigName;
-    var pigWeightParagraph = document.createElement("p");
-    pigWeightParagraph.textContent = "Weight: " + pigWeight + " kg";
-    var pigAgeOffspringParagraph = document.createElement("p");
-    pigAgeOffspringParagraph.classList.add("age-offspring");
-    pigAgeOffspringParagraph.textContent = "Age: " + pigAge + " years";
-    if (pigGender === "female") {
-      pigAgeOffspringParagraph.textContent += ", Offspring: " + offspringCount;
+    var imageData = "";
+    if (pigImageFile) {
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            // Convert image to Base64
+            imageData = reader.result.split(",")[1];
+            sendPigData(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData);
+        };
+
+        reader.readAsDataURL(pigImageFile);
+    } else {
+        // Use default image
+        sendPigData(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData, defaultImageURL);
     }
-    var moreInfoButton = document.createElement("button");
-    moreInfoButton.textContent = "More Info";
-    right.appendChild(pigHeader);
-    right.appendChild(pigWeightParagraph);
-    right.appendChild(pigAgeOffspringParagraph);
-    if (pigGender === "female") {
-      right.appendChild(moreInfoButton);
-    }
-
-    card.appendChild(left);
-    card.appendChild(right);
-
-    pigsContainer.appendChild(card);
 
     document.getElementById("pigName").value = "";
     document.getElementById("pigWeight").value = "";
-    document.getElementById("pigAge").value = "";
+    document.getElementById("pigBirthdate").value = ""; // Clear birthdate input
     document.getElementById("pigGender").value = "male";
     document.getElementById("offspringCount").value = "";
 
     document.getElementById("addPigPopup").style.display = "none";
     document.getElementById("blurBackground").classList.remove("blur");
-  }
+}
+
+function sendPigData(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData, imageURL = "") {
+    // Prepare the data to be sent in the request body
+    var data = {
+        action: "addpig",
+        name: pigName,
+        weight: pigWeight,
+        birthdate: pigBirthdate.toISOString(),
+        gender: pigGender,
+        offspringCount: offspringCount,
+        image: imageData || imageURL
+    };
+
+    fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
+        redirect: 'follow',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        // Handle successful response, maybe update UI or notify user
+    })
+    .catch(error => {
+        console.error('There was a problem with the POST request:', error);
+    });
+}
+
+
+
+function previewImage(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    
+    reader.onload = function() {
+        var dataURL = reader.result;
+        var img = document.createElement("img");
+        img.src = dataURL;
+        
+        // Display the image preview
+        var imageContainer = document.querySelector(".image-container");
+        imageContainer.innerHTML = ""; // Clear previous image
+        imageContainer.appendChild(img);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -133,9 +206,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return response.text();
         })
-        .then(data => {
+        .then(data => { 
             if (data.includes("NMSFFU")) {
-                alert("You don't belong here, why don't you just login or register.");
+               alert("You don't belong here, why don't you just login or register.");
                 window.location.href = "index.html";
             } else {
                 var jsonData = JSON.parse(data);
