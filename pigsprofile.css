@@ -54,10 +54,12 @@ nav ul li a {
   border-radius: 5px;
   text-decoration: none;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .auth-buttons a:hover {
   background-color: #0056b3;
+  cursor: pointer;
 }
 
 .auth-buttons a:first-child {
@@ -71,14 +73,20 @@ nav ul li a {
 
 .drawer {
   position: fixed;
-  top: 0;
-  left: -250px;
-  width: 250px;
-  height: 100%;
+  top: 100%; /* Start hidden at the bottom */
+  left: 0;
+  width: 100%;
   background-color: #333;
   color: #fff;
-  transition: left 0.3s ease;
+  z-index: 1000;
 }
+
+.drawer.active {
+  top: 70px; /* Slide down to this position */
+  transition: top 0.4s ease; /* Transition for top property */
+}
+
+
 
 .drawer ul {
   list-style: none;
@@ -94,13 +102,11 @@ nav ul li.active a {
   color: #007bff;
 }
 
-.drawer.active {
-  left: 0;
-}
+
 
 .drawer.active ul li {
   display: block;
-}
+} 
 
 .hamburger {
   width: 25px;
@@ -175,6 +181,7 @@ nav ul li.active a {
   padding: 20px; /* Add some padding for better appearance */
   text-align: center; /* Center the content */
   transition: background-color 0.3s; /* Smooth transition for background color */
+  cursor: pointer;
 }
 
 .add-card:hover {
@@ -207,6 +214,24 @@ nav ul li.active a {
   nav ul {
     display: none;
   }
+  
+  .my-navigation {
+  display: block;
+  align-items: center; /* Align items vertically */
+}
+
+  .my-navigation {
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+  .logo {
+    margin: 0 auto; /* Center the logo horizontally */
+    display: block; /* Ensure the logo occupies its own line */
+  }
+
 
   .menu-toggle.active + nav ul {
     display: flex;
