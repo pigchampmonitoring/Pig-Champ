@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(data => {
      if (data.includes("NMSFFU")) {
+       alert("You don't belong here, why don't you just login or register.");
   window.location.href = "index.html";
 } else {
   alert("Welcome to Pig CHAMP " + data);
