@@ -108,85 +108,83 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("blurBackground").classList.remove("blur");
   }
 
-  function sendPostRequest() {
+ function sendPostRequest() {
     var token = localStorage.getItem('token');
     var data = {
-      action: "verify",
-      token: token
+        action: "verify",
+        token: token
     };
-    
+
     fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
-      redirect: 'follow',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.text();
-    })
-    .then(data => {
-      if (data.includes("NMSFFU")) {
-        alert("You don't belong here, why don't you just login or register.");
-        window.location.href = "index.html";
-      } else {
-        var jsonData = JSON.parse(data);
-        var pigsContainer = document.querySelector(".pigs-content"); // Define the pigsContainer
+            redirect: 'follow',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            if (data.includes("NMSFFU")) {
+                alert("You don't belong here, why don't you just login or register.");
+                window.location.href = "index.html";
+            } else {
+                var jsonData = JSON.parse(data);
+                jsonData.forEach(function(pig) {
+                    var pigCard = document.createElement("div");
+                    pigCard.className = "card";
 
-        jsonData.forEach(function(pig) {
-          var pigCard = document.createElement("div");
-          pigCard.className = "card";
+                    var imageContainer = document.createElement("div");
+                    imageContainer.className = "left";
 
-          var imageContainer = document.createElement("div");
-          imageContainer.className = "left";
+                    var pigImage = document.createElement("img");
+                    pigImage.src = pig["Image Link"];
+                    pigImage.alt = pig["Pig Name"];
+                    imageContainer.appendChild(pigImage);
 
-          var pigImage = document.createElement("img");
-          pigImage.src = pig["Image Link"];
-          pigImage.alt = pig["Pig Name"];
-          imageContainer.appendChild(pigImage);
+                    var detailsContainer = document.createElement("div");
+                    detailsContainer.className = "right";
 
-          var detailsContainer = document.createElement("div");
-          detailsContainer.className = "right";
+                    var pigName = document.createElement("h2");
+                    pigName.textContent = pig["Pig Name"];
 
-          var pigName = document.createElement("h2");
-          pigName.textContent = pig["Pig Name"];
+                    var pigWeight = document.createElement("p");
+                    pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
 
-          var pigWeight = document.createElement("p");
-          pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
+                    var pigAgeGender = document.createElement("p");
+                    pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
 
-          var pigAgeGender = document.createElement("p");
-          pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
+                    var pigOffspringBirths = document.createElement("p");
+                    pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
 
-          var pigOffspringBirths = document.createElement("p");
-          pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
+                    detailsContainer.appendChild(pigName);
+                    detailsContainer.appendChild(pigWeight);
+                    detailsContainer.appendChild(pigAgeGender);
+                    detailsContainer.appendChild(pigOffspringBirths);
 
-          detailsContainer.appendChild(pigName);
-          detailsContainer.appendChild(pigWeight);
-          detailsContainer.appendChild(pigAgeGender);
-          detailsContainer.appendChild(pigOffspringBirths);
+                    // Add "More Info" button only for female pigs
+                    if (pig["Gender"] === "female") {
+                        var moreInfoButton = document.createElement("button");
+                        moreInfoButton.textContent = "More Info";
+                        detailsContainer.appendChild(moreInfoButton);
+                    }
 
-          // Add "More Info" button only for female pigs
-          if (pig["Gender"] === "female") {
-            var moreInfoButton = document.createElement("button");
-            moreInfoButton.textContent = "More Info";
-            detailsContainer.appendChild(moreInfoButton);
-          }
+                    pigCard.appendChild(imageContainer);
+                    pigCard.appendChild(detailsContainer);
 
-          pigCard.appendChild(imageContainer);
-          pigCard.appendChild(detailsContainer);
-
-          pigsContainer.appendChild(pigCard);
+                    pigsContainer.appendChild(pigCard);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the POST request:', error);
         });
-      }
-    })
-    .catch(error => {
-      console.error('There was a problem with the POST request:', error);
-    });
 }
 
 sendPostRequest();
-
+})
