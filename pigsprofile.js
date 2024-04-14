@@ -89,7 +89,7 @@ function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageDat
 function addPig() {
     var pigName = document.getElementById("pigName").value;
     var pigWeight = document.getElementById("pigWeight").value;
-     var birthdate = document.getElementById("birthdate").value;
+     var birthdate = document.getElementById("pigBirthdate").value;
     var pigGender = document.getElementById("pigGender").value;
     var offspringCount = document.getElementById("offspringCount").value;
 
@@ -122,7 +122,7 @@ function addPig() {
 
     document.getElementById("addPigPopup").style.display = "none";
     document.getElementById("blurBackground").classList.remove("blur");
- sendPostRequest();
+ window.location.href = "Pigs-Profile.html";
 }
 
 
