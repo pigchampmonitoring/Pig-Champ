@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Send the POST request
-    fetch('https://script.google.com/macros/s/AKfycbx2ZOj9vsAVA2wkh8TGIwsybro26Sq9lpm5VIZDRaUitJOR8jG5hLltt3OmucSdxfXj/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
       redirect: 'follow',
       method: 'POST',
       headers: {
