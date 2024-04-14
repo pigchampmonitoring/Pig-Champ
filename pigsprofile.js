@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     drawer.classList.toggle('active');
   }
 
+  
 function closeDrawer(event) {
   // Check if the clicked element or any of its parents is the drawer, menu toggle, or part of the drawer
   var isClickedInsideDrawer = drawer.contains(event.target) || menuToggle.contains(event.target) || event.target.closest('.drawer');
