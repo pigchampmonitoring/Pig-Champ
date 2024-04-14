@@ -156,6 +156,7 @@ function addPig() {
 
     document.getElementById("addPigPopup").style.display = "none";
     document.getElementById("blurBackground").classList.remove("blur");
+ sendPostRequest();
 }
 
 
