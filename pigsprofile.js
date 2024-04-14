@@ -153,7 +153,12 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.text();
     })
     .then(data => {
-      console.log(data); // Handle the response data
+     if (data.includes("NMSFFU")) {
+  window.location.href = "index.html";
+} else {
+  alert("Welcome to Pig CHAMP " + data);
+}
+
     })
     .catch(error => {
       console.error('There was a problem with the POST request:', error);
