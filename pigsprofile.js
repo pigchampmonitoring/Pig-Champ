@@ -80,6 +80,9 @@ function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageDat
     .then(data => {
         // Handle the response if needed
         console.log('Pig added successfully:', data);
+     if (data.includes("success")) {
+ window.location.href = "Pigs-Profile.html";
+     }
     })
     .catch(error => {
         console.error('There was a problem with the POST request:', error);
@@ -122,7 +125,6 @@ function addPig() {
 
     document.getElementById("addPigPopup").style.display = "none";
     document.getElementById("blurBackground").classList.remove("blur");
- window.location.href = "Pigs-Profile.html";
 }
 
 
