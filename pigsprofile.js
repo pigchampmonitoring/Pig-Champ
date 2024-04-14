@@ -49,40 +49,6 @@
     }
   }
 
-function calculateAge(birthdate) {
-    var today = new Date();
-    var years = today.getFullYear() - birthdate.getFullYear();
-    var months = today.getMonth() - birthdate.getMonth();
-    var days = today.getDate() - birthdate.getDate();
-
-    if (months < 0 || (months === 0 && today.getDate() < birthdate.getDate())) {
-        years--;
-        months += 12;
-    }
-
-    if (days < 0) {
-        months--;
-        var tempDate = new Date(birthdate.getFullYear(), birthdate.getMonth() + 1, 0);
-        days += tempDate.getDate();
-    }
-
-    return {
-        years: years,
-        months: months,
-        days: days
-    };
-}
-
-function formatAge(age) {
-    if (age.years > 0) {
-        return age.years + (age.years === 1 ? " year" : " years") + " old";
-    } else if (age.months > 0) {
-        return age.months + (age.months === 1 ? " month" : " months") + " old";
-    } else {
-        return age.days + (age.days === 1 ? " day" : " days") + " old";
-    }
-}
-
 function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageData) {
     var token = localStorage.getItem('token');
     
@@ -123,7 +89,7 @@ function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageDat
 function addPig() {
     var pigName = document.getElementById("pigName").value;
     var pigWeight = document.getElementById("pigWeight").value;
-    var pigBirthdate = new Date(document.getElementById("pigBirthdate").value).toISOString();
+     var birthdate = document.getElementById("birthdate").value;
     var pigGender = document.getElementById("pigGender").value;
     var offspringCount = document.getElementById("offspringCount").value;
 
