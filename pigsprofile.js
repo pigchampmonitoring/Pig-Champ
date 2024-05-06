@@ -92,7 +92,7 @@ function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageDat
 function addPig() {
     var pigName = document.getElementById("pigName").value;
     var pigWeight = document.getElementById("pigWeight").value;
-     var birthdate = document.getElementById("pigBirthdate").value;
+    var pigBirthdate = document.getElementById("pigBirthdate").value;
     var pigGender = document.getElementById("pigGender").value;
     var offspringCount = document.getElementById("offspringCount").value;
 
@@ -108,21 +108,23 @@ function addPig() {
         reader.onloadend = function() {
             // Convert image to Base64
             imageData = reader.result.split(",")[1];
-            sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData)
+            sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData);
         };
 
         reader.readAsDataURL(pigImageFile);
     } else {
         // Use default image
-        sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, "")
+        sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, "");
     }
 
+    // Clear input fields after adding pig
     document.getElementById("pigName").value = "";
     document.getElementById("pigWeight").value = "";
     document.getElementById("pigBirthdate").value = ""; // Clear birthdate input
     document.getElementById("pigGender").value = "male";
     document.getElementById("offspringCount").value = "";
 
+    // Close add pig popup after submission
     document.getElementById("addPigPopup").style.display = "none";
     document.getElementById("blurBackground").classList.remove("blur");
 }
