@@ -60,7 +60,7 @@
       <img src="https://github.com/nthnlgmz/imgs/assets/143614589/b0edd311-e33d-4a41-bbea-1e7df6c0ffdc" alt="Close" class="close-login" onclick="closeaddpigpopup()">
       <h2>Add Pig</h2>
       <div class="add-pig-form">
-        <input type="file" id="pigImageInput" accept="image/*" onchange="previewImage(event)">
+        <input type="file" id="pigImageInput" accept="image/*">
 
         <input type="text" id="pigName" placeholder="Pig Tag">
         <input type="text" id="pigWeight" placeholder="Weight">
@@ -76,6 +76,7 @@
         </div>
         <input type="number" id="birthCount" placeholder="Number of Births" style="display: none;">
         <br>
+        <div id="incompleteDetails" style="color: red; display: none;">Please fill in all details before adding a pig.</div>
         <button onclick="addPig()">Add Pig</button>
       </div>
     </div>
