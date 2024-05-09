@@ -49,105 +49,111 @@
     }
   }
 
-function sendPigs2Hell(name, weight, birthdate, gender, offspringCount, imageData) {
-    var token = localStorage.getItem('token');
-    
-    var data = {
-        action: "addpig",
-        token: token,
-        name: name,
-        weight: weight,
-        birthdate: birthdate,
-        gender: gender,
-        offspringCount: offspringCount,
-        imageData: imageData
-    };
-
-    return fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
-        redirect: 'follow',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(data => {
-        // Handle the response if needed
-        console.log('Pig added successfully:', data);
-     if (data.includes("success")) {
- window.location.href = "Pigs-Profile.html";
-     }
-    })
-    .catch(error => {
-        console.error('There was a problem with the POST request:', error);
-    });
-}
 
 function addPig() {
     var pigName = document.getElementById("pigName").value;
     var pigWeight = document.getElementById("pigWeight").value;
     var pigBirthdate = document.getElementById("pigBirthdate").value;
     var pigGender = document.getElementById("pigGender").value;
-    var offspringCount = document.getElementById("offspringCount").value;
+    var offspringCount;
+    var numberOfBirths;
+    var token = localStorage.getItem('token');
 
-    // Get the image data
-    var pigImageInput = document.getElementById("pigImageInput");
-    var pigImageFile = pigImageInput.files[0];
-    var defaultImageURL = "https://github.com/pigchampmonitoring/Pig-Champ/assets/166279981/99f91bd4-6981-4ba6-9d10-1075b540b446";
-
-    var imageData = "";
-    if (pigImageFile) {
-        var reader = new FileReader();
-
-        reader.onloadend = function() {
-            // Convert image to Base64
-            imageData = reader.result.split(",")[1];
-            sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, imageData);
-        };
-
-        reader.readAsDataURL(pigImageFile);
-    } else {
-        // Use default image
-        sendPigs2Hell(pigName, pigWeight, pigBirthdate, pigGender, offspringCount, "");
+    // Validate if any field is empty
+    if (pigName === "" || pigWeight === "" || pigBirthdate === "" || pigGender === "") {
+        document.getElementById("incompleteDetails").style.display = "block";
+        return; // Exit function if any field is empty
     }
 
-    // Clear input fields after adding pig
-    document.getElementById("pigName").value = "";
-    document.getElementById("pigWeight").value = "";
-    document.getElementById("pigBirthdate").value = ""; // Clear birthdate input
-    document.getElementById("pigGender").value = "male";
-    document.getElementById("offspringCount").value = "";
+    // Conditionally handle offspringCount and numberOfBirths based on pigGender
+    if (pigGender === "female") {
+        // For female pigs, get the value of offspring count and number of births
+        offspringCount = document.getElementById("offspringCount").value;
+        numberOfBirths = document.getElementById("birthCount").value;
 
-    // Close add pig popup after submission
-    document.getElementById("addPigPopup").style.display = "none";
-    document.getElementById("blurBackground").classList.remove("blur");
-}
+        // Validate if offspringCount is filled
+        if (offspringCount === "") {
+            document.getElementById("incompleteDetails").style.display = "block";
+            return; // Exit function if offspring count is empty for female pigs
+        }
+    }
 
+    // Log the data entered by the user
+    console.log("Pig Name:", pigName);
+    console.log("Pig Weight:", pigWeight);
+    console.log("Pig Birthdate:", pigBirthdate);
+    console.log("Pig Gender:", pigGender);
 
+    // Conditionally handle offspringCount and numberOfBirths based on pigGender
+    if (pigGender === "male") {
+        // For male pigs, there is no need for offspring count or number of births
+        offspringCount = "";
+        numberOfBirths = "";
+    } else {
+        // For female pigs, get the value of offspring count and number of births
+        offspringCount = document.getElementById("offspringCount").value;
+        numberOfBirths = document.getElementById("birthCount").value;
+        // Log the additional data
+        console.log("Offspring Count:", offspringCount);
+        console.log("Number of Births:", numberOfBirths);
+    }
 
-function previewImage(event) {
-    var input = event.target;
+    // Retrieve the image data URL
+    var input = document.getElementById("pigImageInput");
+    var file = input.files[0];
     var reader = new FileReader();
-    
+
     reader.onload = function() {
         var dataURL = reader.result;
-        var img = document.createElement("img");
-        img.src = dataURL;
-        
-        // Display the image preview
-        var imageContainer = document.querySelector(".image-container");
-        imageContainer.innerHTML = ""; // Clear previous image
-        imageContainer.appendChild(img);
+        // Log the image data URL
+        console.log("Image Data:", dataURL);
+
+        // Your existing logic to send data to server or perform other actions
+        var data = {
+            action: "addpig",
+            token: token,
+            name: pigName,
+            weight: pigWeight,
+            birthdate: pigBirthdate,
+            gender: pigGender,
+            offspringCount: offspringCount,
+            numberOfBirths: numberOfBirths,
+            imageData: dataURL
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
+                redirect: 'follow',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Handle the response if needed
+                console.log('Pig added successfully:', data);
+                if (data.includes("success")) {
+                    window.location.href = "Pigs-Profile.html";
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the POST request:', error);
+            });
+
+        closeaddpigpopup();
     };
 
-    reader.readAsDataURL(input.files[0]);
+    if (file) {
+        reader.readAsDataURL(file); // Read the file as a data URL
+    }
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
