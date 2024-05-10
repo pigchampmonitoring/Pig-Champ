@@ -444,3 +444,45 @@ function validatePassword(password) {
 
   return true;
 }
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  function sendPostRequest() {
+    var token = localStorage.getItem('token');
+    var data = {
+      action: "verify",
+      token: token
+    };
+    fetch('https://script.google.com/macros/s/AKfycbyh3SCrMuqb7U24KyiEuf8G8lACexAJct3h1Q6Awm3Itv-hZrer7xcgByi1uT6WLZm-Zg/exec', {
+            redirect: 'follow',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => { 
+            if (data.includes("NMSFFU")) {
+            } else {
+                window.location.href = "Pigs-Profile.html";
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the POST request:', error);
+        });
+}
+
+sendPostRequest();
+})
+
+
+
+
+
