@@ -305,7 +305,7 @@ thirdMateInput.addEventListener("change", function() {
 var addInfoButton = document.getElementById("addInfoButton");
 addInfoButton.addEventListener("click", function() {
   // Clone the mate container
-  var mateContainer = document.querySelector(".mate-container");
+  var mateContainer = document.getElementByClass("mate");
   var newMateContainer = mateContainer.cloneNode(true);
   
   // Clear the values of date inputs
