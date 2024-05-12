@@ -10,7 +10,7 @@
     var isClickedInsideDrawer = drawer.contains(event.target) || menuToggle.contains(event.target) || event.target.closest('.drawer');
     if (!isClickedInsideDrawer) {
       drawer.classList.remove('active');
-    }
+    } 
   }
 
   menuToggle.addEventListener('click', toggleDrawer);
