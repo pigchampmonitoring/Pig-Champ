@@ -136,22 +136,24 @@ nav ul li.active a {
 /* Updated CSS for the date rows */
 .date-row {
   display: flex;
+  flex-direction: column; /* Display labels and inputs in a column */
   align-items: center;
   margin-bottom: 10px; /* Add some space between date rows */
 }
 
 .date-row label {
-  margin-right: 10px; /* Add some space between label and input */
+  margin-bottom: 5px; /* Add some space between label and input */
 }
 
 .date-row input {
-  flex: 1; /* Take remaining space */
+  width: 100%; /* Set input width to fill its container */
   border-radius: 5px;
   padding: 8px;
   border: 1px solid #ccc;
 }
 
 /* Rest of your existing CSS */
+
 
 .left {
   display: flex;
