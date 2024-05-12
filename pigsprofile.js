@@ -21,6 +21,19 @@
     drawers.style.display = drawers.style.display === 'none' ? 'block' : 'none'; 
   }
 
+// Function to open the More Info popup
+function openMoreInfoPopup() {
+    document.getElementById("moreInfoPopup").style.display = "block";
+    document.getElementById("blurBackground").classList.add("blur");
+}
+
+// Function to close the More Info popup
+function closeMoreInfoPopup() {
+    document.getElementById("moreInfoPopup").style.display = "none";
+    document.getElementById("blurBackground").classList.remove("blur");
+}
+
+
   function showAddPigPopup() {
     document.getElementById("addPigPopup").style.display = "block";
     document.getElementById("blurBackground").classList.add("blur");
@@ -184,6 +197,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 var jsonData = JSON.parse(data);
                 jsonData.forEach(function(pig) {
+                  var moreInfoButton = document.createElement("button");
+    moreInfoButton.textContent = "More Info";
+    moreInfoButton.onclick = openMoreInfoPopup;
+    detailsContainer.appendChild(moreInfoButton);
+
                     var pigCard = document.createElement("div");
                     pigCard.className = "card";
 
