@@ -286,4 +286,18 @@ secondMateInput.addEventListener("change", function() {
 // Add event listener to the thirdMateInput field
 thirdMateInput.addEventListener("change", function() {
   // No need for additional logic as the third mate input is not followed by another input
+  // Calculate due date based on the third mate input date
+  if (thirdMateInput.value !== "") {
+    // Parse the date string to a Date object
+    var thirdMateDate = new Date(thirdMateInput.value);
+    // Add 10 months to the third mate date
+    var dueDate = new Date(thirdMateDate.getFullYear(), thirdMateDate.getMonth() + 10, thirdMateDate.getDate());
+    // Format the due date as YYYY-MM-DD
+    var formattedDueDate = dueDate.toISOString().split('T')[0];
+    // Set the due date input value
+    dueDateInput.value = formattedDueDate;
+  } else {
+    // If the third mate date is empty, clear the due date input
+    dueDateInput.value = "";
+  }
 });
