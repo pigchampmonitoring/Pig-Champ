@@ -302,18 +302,3 @@ thirdMateInput.addEventListener("change", function() {
   }
 });
 
-var addInfoButton = document.getElementById("addInfoButton");
-addInfoButton.addEventListener("click", function() {
-  // Clone the mate container
-  var mateContainer = document.getElementByClass("mate");
-  var newMateContainer = mateContainer.cloneNode(true);
-  
-  // Clear the values of date inputs
-  var dateInputs = newMateContainer.querySelectorAll("input[type='date']");
-  dateInputs.forEach(function(input) {
-    input.value = "";
-  });
-  
-  // Append the new mate container to the parent
-  mateContainer.parentNode.appendChild(newMateContainer);
-});
