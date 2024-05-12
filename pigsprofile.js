@@ -91,12 +91,6 @@ function addPig() {
         }
     }
 
-    // Log the data entered by the user
-    console.log("Pig Name:", pigName);
-    console.log("Pig Weight:", pigWeight);
-    console.log("Pig Birthdate:", pigBirthdate);
-    console.log("Pig Gender:", pigGender);
-
     // Conditionally handle offspringCount and numberOfBirths based on pigGender
     if (pigGender === "male") {
         // For male pigs, there is no need for offspring count or number of births
@@ -196,53 +190,63 @@ document.addEventListener('DOMContentLoaded', function() {
                window.location.href = "index.html";
             } else {
                 var jsonData = JSON.parse(data);
-                jsonData.forEach(function(pig) {
-                  var moreInfoButton = document.createElement("button");
+jsonData.forEach(function(pig) {
+    var moreInfoButton = document.createElement("button");
+    var pigCard = document.createElement("div");
+    pigCard.className = "card";
 
-                    var pigCard = document.createElement("div");
-                    pigCard.className = "card";
+    var imageContainer = document.createElement("div");
+    imageContainer.className = "left";
 
-                    var imageContainer = document.createElement("div");
-                    imageContainer.className = "left";
+    var pigImage = document.createElement("img");
+    pigImage.src = pig["Image Link"];
+    pigImage.alt = pig["Pig Name"];
+    imageContainer.appendChild(pigImage);
 
-                    var pigImage = document.createElement("img");
-                    pigImage.src = pig["Image Link"];
-                    pigImage.alt = pig["Pig Name"];
-                    imageContainer.appendChild(pigImage);
+    var detailsContainer = document.createElement("div");
+    detailsContainer.className = "right";
 
-                    var detailsContainer = document.createElement("div");
-                    detailsContainer.className = "right";
+    // Add pig name as a non-editable field
+    var pigNameInfoRow = document.createElement("div");
+    pigNameInfoRow.className = "info-row";
+    var pigNameLabel = document.createElement("label");
+    pigNameLabel.textContent = "Name:";
+    var pigNameValue = document.createElement("span");
+    pigNameValue.textContent = pig["Pig Name"];
+    pigNameInfoRow.appendChild(pigNameLabel);
+    pigNameInfoRow.appendChild(pigNameValue);
+    detailsContainer.appendChild(pigNameInfoRow);
 
-                    var pigName = document.createElement("h2");
-                    pigName.textContent = pig["Pig Name"];
+    var pigName = document.createElement("h2");
+    pigName.textContent = pig["Pig Name"];
 
-                    var pigWeight = document.createElement("p");
-                    pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
+    var pigWeight = document.createElement("p");
+    pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
 
-                    var pigAgeGender = document.createElement("p");
-                    pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
+    var pigAgeGender = document.createElement("p");
+    pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
 
-                    var pigOffspringBirths = document.createElement("p");
-                    pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
+    var pigOffspringBirths = document.createElement("p");
+    pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
 
-                    detailsContainer.appendChild(pigName);
-                    detailsContainer.appendChild(pigWeight);
-                    detailsContainer.appendChild(pigAgeGender);
-                    detailsContainer.appendChild(pigOffspringBirths);
+    detailsContainer.appendChild(pigName);
+    detailsContainer.appendChild(pigWeight);
+    detailsContainer.appendChild(pigAgeGender);
+    detailsContainer.appendChild(pigOffspringBirths);
 
-                    // Add "More Info" button only for female pigs
-                    if (pig["Gender"] === "female") {
-                     var moreInfoButton = document.createElement("button");
-                     moreInfoButton.textContent = "More Info";
-                     moreInfoButton.onclick = openMoreInfoPopup;
-                     detailsContainer.appendChild(moreInfoButton);
+    // Add "More Info" button only for female pigs
+    if (pig["Gender"] === "female") {
+        var moreInfoButton = document.createElement("button");
+        moreInfoButton.textContent = "More Info";
+        moreInfoButton.onclick = openMoreInfoPopup;
+        detailsContainer.appendChild(moreInfoButton);
     }
 
-                    pigCard.appendChild(imageContainer);
-                    pigCard.appendChild(detailsContainer);
-
-                    pigsContainer.appendChild(pigCard);
-                });
+    pigCard.appendChild(imageContainer);
+    pigCard.appendChild(detailsContainer);
+    // Append the pig card to your page
+    document.body.appendChild(pigCard);
+});
             }
         })
         .catch(error => {
