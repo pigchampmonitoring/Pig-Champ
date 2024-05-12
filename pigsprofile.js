@@ -168,7 +168,32 @@ function addPig() {
 }
 
 
+function calculateAge(dateString) {
+    var serverDate = new Date(dateString);
+    var currentDate = new Date();
 
+    var yearsDifference = currentDate.getFullYear() - serverDate.getFullYear();
+    var monthsDifference = currentDate.getMonth() - serverDate.getMonth();
+    var daysDifference = currentDate.getDate() - serverDate.getDate();
+
+    // Adjust the difference if the current day of the month is less than the server's day
+    if (daysDifference < 0) {
+        monthsDifference--;
+    }
+    // Adjust the difference if the current month is less than the server's month
+    if (monthsDifference < 0) {
+        yearsDifference--;
+        monthsDifference += 12;
+    }
+
+    if (yearsDifference > 0) {
+        return yearsDifference + " year" + (yearsDifference > 1 ? "s" : "");
+    } else if (monthsDifference > 0) {
+        return monthsDifference + " month" + (monthsDifference > 1 ? "s" : "");
+    } else {
+        return daysDifference + " day" + (daysDifference !== 1 ? "s" : "");
+    }
+}
 document.addEventListener('DOMContentLoaded', function() {
   function sendPostRequest() {
     var token = localStorage.getItem('token');
@@ -220,7 +245,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     pigWeight.textContent = "Weight: " + pig["Weight"] + " kg";
 
                     var pigAgeGender = document.createElement("p");
-                    pigAgeGender.textContent = "Age: " + pig["Age"] + " years, Gender: " + pig["Gender"];
+                    var ageString = "Age: " + calculateAge(pig["Birthdate"]);
+                    pigAgeGender.textContent = ageString + ", Gender: " + pig["Gender"];
 
                     var pigOffspringBirths = document.createElement("p");
                     pigOffspringBirths.textContent = "Offspring Count: " + pig["Offspring Count"] + ", Number of Births: " + pig["Number of Births"];
