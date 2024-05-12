@@ -1,7 +1,7 @@
  var menuToggle = document.querySelector('.menu-toggle');
   var drawer = document.querySelector('.drawer');
   var pigsContainer = document.querySelector(".pigs-content");  // Moved here
- 
+  
   function toggleDrawer() {
     drawer.classList.toggle('active');
   }
