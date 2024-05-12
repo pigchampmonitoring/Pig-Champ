@@ -134,7 +134,7 @@ nav ul li.active a {
 }
 
 /* Updated CSS for the date rows */
-.date-row, .info-row {
+.date-row, .infoRow {
   display: flex;
   flex-direction: column; /* Display labels and inputs in a column */
   align-items: center;
@@ -142,11 +142,11 @@ nav ul li.active a {
   margin-left: 25px;
 }
 
-.date-row, .info-row label {
+.date-row, .infoRow label {
   margin-bottom: 6px; /* Add some space between label and input */
 }
 
-.date-row input, .info-row input {
+.date-row input, .infoRow input {
   width: 100%; /* Set input width to fill its container */
   border-radius: 5px;
   padding: 8px;
