@@ -298,6 +298,13 @@ nav ul li.active a {
   z-index: 9999;
 }
 
+.popupInfo-content {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .popup {
   display: none;
   position: fixed;
