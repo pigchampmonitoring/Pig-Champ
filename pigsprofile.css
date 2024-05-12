@@ -319,7 +319,7 @@ nav ul li.active a {
   z-index: 9999;
 }
 
-.popup-content h2 {
+.popup-content h2, popupInfo-content h2 {
   color: black;
 }
 
