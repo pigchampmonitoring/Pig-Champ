@@ -198,9 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 var jsonData = JSON.parse(data);
                 jsonData.forEach(function(pig) {
                   var moreInfoButton = document.createElement("button");
-    moreInfoButton.textContent = "More Info";
-    moreInfoButton.onclick = openMoreInfoPopup;
-    detailsContainer.appendChild(moreInfoButton);
 
                     var pigCard = document.createElement("div");
                     pigCard.className = "card";
@@ -235,10 +232,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Add "More Info" button only for female pigs
                     if (pig["Gender"] === "female") {
-                        var moreInfoButton = document.createElement("button");
-                        moreInfoButton.textContent = "More Info";
-                        detailsContainer.appendChild(moreInfoButton);
-                    }
+                     var moreInfoButton = document.createElement("button");
+                     moreInfoButton.textContent = "More Info";
+                     moreInfoButton.onclick = openMoreInfoPopup;
+                     detailsContainer.appendChild(moreInfoButton);
+    }
 
                     pigCard.appendChild(imageContainer);
                     pigCard.appendChild(detailsContainer);
