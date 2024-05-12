@@ -252,3 +252,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 sendPostRequest();
 })
+
+// Get references to the date input fields
+var firstMateInput = document.getElementById("firstMate");
+var secondMateInput = document.getElementById("secondMate");
+var thirdMateInput = document.getElementById("thirdMate");
+var dueDateInput = document.getElementById("dueDate");
+
+// Add event listener to the firstMateInput field
+firstMateInput.addEventListener("change", function() {
+  // If the first mate is set, enable the second mate input
+  if (firstMateInput.value !== "") {
+    secondMateInput.removeAttribute("disabled");
+  } else {
+    // If the first mate is empty, disable and clear the second mate input
+    secondMateInput.setAttribute("disabled", true);
+    secondMateInput.value = "";
+  }
+});
+
+// Add event listener to the secondMateInput field
+secondMateInput.addEventListener("change", function() {
+  // If the second mate is set, enable the third mate input
+  if (secondMateInput.value !== "") {
+    thirdMateInput.removeAttribute("disabled");
+  } else {
+    // If the second mate is empty, disable and clear the third mate input
+    thirdMateInput.setAttribute("disabled", true);
+    thirdMateInput.value = "";
+  }
+});
+
+// Add event listener to the thirdMateInput field
+thirdMateInput.addEventListener("change", function() {
+  // No need for additional logic as the third mate input is not followed by another input
+});
