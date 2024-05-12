@@ -139,6 +139,7 @@ nav ul li.active a {
   flex-direction: column; /* Display labels and inputs in a column */
   align-items: center;
   margin-bottom: 10px; /* Add some space between date rows */
+  margin-left: 20px;
 }
 
 .date-row label {
@@ -281,6 +282,20 @@ nav ul li.active a {
   .card {
     width: calc(100% - 20px);
   }
+}
+
+.popupInfo {
+  display: none;
+  position: fixed;
+  width: 95%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  z-index: 9999;
 }
 
 .popup {
