@@ -134,19 +134,19 @@ nav ul li.active a {
 }
 
 /* Updated CSS for the date rows */
-.date-row {
+.date-row, .info-row {
   display: flex;
   flex-direction: column; /* Display labels and inputs in a column */
   align-items: center;
   margin-bottom: 10px; /* Add some space between date rows */
-  margin-left: 20px;
+  margin-left: 25px;
 }
 
-.date-row label {
-  margin-bottom: 5px; /* Add some space between label and input */
+.date-row, .info-row label {
+  margin-bottom: 6px; /* Add some space between label and input */
 }
 
-.date-row input {
+.date-row input, .info-row input {
   width: 100%; /* Set input width to fill its container */
   border-radius: 5px;
   padding: 8px;
@@ -154,7 +154,6 @@ nav ul li.active a {
 }
 
 /* Rest of your existing CSS */
-
 
 .left {
   display: flex;
@@ -290,6 +289,7 @@ nav ul li.active a {
   width: 90%;
   top: 50%;
   left: 50%;
+  bottom: 1px;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
@@ -319,7 +319,7 @@ nav ul li.active a {
   z-index: 9999;
 }
 
-.popup-content h2, popupInfo-content h2 {
+.popup-content h2 {
   color: black;
 }
 
