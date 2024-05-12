@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                window.location.href = "index.html";
             } else {
                 var jsonData = JSON.parse(data);
+             console.log(data);
                 jsonData.forEach(function(pig) {
                   var moreInfoButton = document.createElement("button");
 
